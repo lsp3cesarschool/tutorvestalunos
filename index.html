@@ -637,7 +637,7 @@
           <div class="card-header">
             <div>
               <h3 class="card-title">Entrar</h3>
-              <p class="card-kicker">Qualquer usuário/senha (mock). O nome digitado vira o nome exibido depois.</p>
+              <p class="card-kicker">Qualquer usuário/senha (protótipo). O nome digitado vira o nome exibido depois.</p>
             </div>
             <span class="tag">🔒 Login de teste</span>
           </div>
@@ -738,7 +738,7 @@
                 <button class="btn small" id="btnSendMsg" type="button">Enviar</button>
               </div>
               <div class="muted2" style="font-size:12px;">
-                * Mock local: mensagens ficam só nesta página (salvas em localStorage).
+                * protótipo local: mensagens ficam só nesta página (salvas em localStorage).
               </div>
             </div>
           </div>
@@ -1001,7 +1001,7 @@
 
   <script>
     /************************************************************
-     * TutorVest: Aluno — Mock SPA (HTML/CSS/JS em 1 arquivo)
+     * TutorVest: Aluno — protótipo SPA (HTML/CSS/JS em 1 arquivo)
      * - Login de teste: qualquer usuário/senha
      * - Dashboard: tutor + chat + agendamentos + tarefas
      * - Matérias: Matemática e Português
@@ -1182,8 +1182,8 @@
       window.__toastTimer = setTimeout(()=>t.classList.remove("show"), 2200);
     }
 
-    // ==== Estado (mock) ====
-    const STORAGE_KEY = "tutorvest_aluno_mock_v1";
+    // ==== Estado (protótipo) ====
+    const STORAGE_KEY = "tutorvest_aluno_protótipo_v1";
 
     const state = {
       loggedIn: false,
@@ -1269,7 +1269,7 @@
       // sessão label
       $("#sessionLabel").textContent = `Sessão: ${state.studentName}`;
 
-      // iniciais do tutor (mock)
+      // iniciais do tutor (protótipo)
       const initials = state.tutor.name.split(" ").slice(0,2).map(w=>w[0]).join("").toUpperCase();
       $("#tutorInitials").textContent = initials;
       $("#tutorName").textContent = state.tutor.name;
@@ -1319,7 +1319,7 @@
             <p class="desc">${s.where} • <span class="tag ${statusTag}">${s.status}</span></p>
           </div>
           <div class="right">
-            <button class="btn ghost small" type="button" title="Ação mock">⋯</button>
+            <button class="btn ghost small" type="button" title="Ação protótipo">⋯</button>
           </div>
         `;
         sched.appendChild(el);
@@ -1352,7 +1352,7 @@
       });
       tasks.querySelectorAll("[data-action='doneTask']").forEach(btn=>{
         btn.addEventListener("click", ()=>{
-          toast("Mock: tarefa marcada (sem backend).");
+          toast("protótipo: tarefa marcada (sem backend).");
         });
       });
 
@@ -1387,7 +1387,7 @@
       state.chat.push({ from: "me", name: state.studentName, time: nowHHMM(), text: txt });
       $("#chatInput").value = "";
 
-      // auto-reply mock (tutor)
+      // auto-reply protótipo (tutor)
       setTimeout(()=>{
         const canned = [
           "Boa! Me diga em qual questão você travou e qual alternativa você marcou.",
@@ -1452,7 +1452,7 @@
       state.quiz.filter = "all";
       setFilterButtons("all");
 
-      // keep answers if user wants? For mock, start fresh each time:
+      // keep answers if user wants? For protótipo, start fresh each time:
       state.quiz.answers = {};
 
       save();
@@ -1686,9 +1686,9 @@
       $("#btnStartFullSim").addEventListener("click", ()=> startQuiz("full"));
       $("#btnStartFromTasks").addEventListener("click", ()=> startQuiz("full"));
       $("#btnOpenTasks").addEventListener("click", ()=> {
-        toast("Você já está no painel de tarefas (mock).");
+        toast("Você já está no painel de tarefas (protótipo).");
       });
-      $("#btnRequestSession").addEventListener("click", ()=> toast("Mock: solicitação enviada ao tutor (sem backend)."));
+      $("#btnRequestSession").addEventListener("click", ()=> toast("protótipo: solicitação enviada ao tutor (sem backend)."));
 
       // chat
       $("#btnSendMsg").addEventListener("click", sendMessage);
@@ -1776,16 +1776,6 @@
     }
 
     bootstrap();
-  </script>
-
-  <script>
-    /*
-      ✅ PARA DEIXAR 100% STANDALONE (com ícone embutido):
-      Substitua a string {{BASE64_ICON}} (no APP_ICON_DATA_URI_FULL) pelo base64 do arquivo tutorvest.jpg.
-
-      Se você quiser, me diga “gera o arquivo completo com base64 embutido” que eu te devolvo
-      este mesmo HTML já com o base64 inteiro no lugar (fica grande, mas funciona perfeito).
-    */
   </script>
 </body>
 </html>
