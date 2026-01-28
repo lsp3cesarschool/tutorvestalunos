@@ -21,7 +21,6 @@
   </script>
 
   <style>
-    /* CSS mínimo (apenas o que Tailwind não cobre tão bem aqui) */
     html, body { height: 100%; }
     body{
       background:
@@ -56,11 +55,12 @@
 <body class="text-white/90 antialiased">
   <div class="noise"></div>
 
-  <!-- Topbar -->
+  <!-- TOPBAR (Desktop / Tablet) -->
   <header id="topbar" class="hidden sticky top-0 z-30">
     <div class="glass border-x-0 border-t-0">
       <div class="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between gap-3">
-        <div class="flex items-center gap-3 min-w-[220px]">
+        <!-- Left (hide on mobile) -->
+        <div class="hidden md:flex items-center gap-3 min-w-[220px]">
           <img id="appIcon" alt="TutorVest ícone"
                class="w-10 h-10 rounded-xl border border-white/15 bg-white/10 shadow-soft" />
           <div class="leading-tight">
@@ -69,7 +69,8 @@
           </div>
         </div>
 
-        <div class="flex items-center justify-end gap-2 flex-wrap">
+        <!-- Right (desktop nav) -->
+        <div class="hidden md:flex items-center justify-end gap-2 flex-wrap">
           <div class="inline-flex items-center gap-2 px-3 py-2 rounded-full glass text-xs text-white/70">
             <span class="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_0_3px_rgba(52,211,153,.15)]"></span>
             <span id="sessionLabel">Sessão</span>
@@ -90,6 +91,37 @@
             Sair
           </button>
         </div>
+
+        <!-- MOBILE: Nome do aluno + Hamburger (Perfil / Sair) -->
+        <div class="flex md:hidden items-center justify-between w-full">
+          <div class="text-sm font-extrabold tracking-tight">
+            <span id="mobileStudentName">Aluno</span>
+          </div>
+
+          <div class="relative">
+            <button id="btnHamburger" type="button"
+              class="w-10 h-10 rounded-2xl glass hover:bg-white/10 transition grid place-items-center"
+              aria-haspopup="true" aria-expanded="false" aria-controls="mobileMenu">
+              <!-- simple hamburger icon -->
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" class="opacity-90">
+                <path d="M4 7h16M4 12h16M4 17h16" stroke="white" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </button>
+
+            <div id="mobileMenu"
+              class="hidden absolute right-0 mt-2 w-44 rounded-2xl glass-strong shadow-glow overflow-hidden">
+              <button id="btnMobileProfile" type="button"
+                class="w-full text-left px-4 py-3 hover:bg-white/10 transition text-sm font-semibold">
+                Perfil
+              </button>
+              <button id="btnMobileLogout" type="button"
+                class="w-full text-left px-4 py-3 hover:bg-white/10 transition text-sm font-semibold text-rose-200">
+                Sair
+              </button>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </header>
@@ -98,7 +130,6 @@
     <!-- LOGIN -->
     <section id="screenLogin" class="pt-8">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch">
-        <!-- Left hero -->
         <div class="lg:col-span-7 rounded-3xl glass-strong shadow-glow p-6 relative overflow-hidden">
           <div class="absolute -top-24 -right-28 w-[380px] h-[380px] rounded-full border border-white/10 bg-white/5 blur-[0.2px]"></div>
           <div class="absolute -bottom-28 -left-32 w-[420px] h-[420px] rounded-full border border-white/10 bg-emerald-400/10 blur-[0.2px]"></div>
@@ -141,7 +172,6 @@
           </div>
         </div>
 
-        <!-- Right login card -->
         <div class="lg:col-span-5 rounded-3xl glass-strong shadow-glow p-6">
           <div class="flex items-start justify-between gap-3">
             <div>
@@ -184,8 +214,9 @@
     </section>
 
     <!-- DASHBOARD -->
-    <section id="screenDashboard" class="hidden pt-7">
-      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-3">
+    <section id="screenDashboard" class="hidden pt-5 md:pt-7">
+      <!-- Desktop headline (hide on mobile) -->
+      <div class="hidden md:flex flex-col md:flex-row md:items-end md:justify-between gap-3">
         <div>
           <h2 class="text-3xl font-extrabold tracking-tight">
             Olá, <span id="studentName">Aluno</span> 👋
@@ -195,15 +226,28 @@
           </p>
         </div>
         <div class="flex items-center gap-2 flex-wrap">
-          <button id="btnOpenTasks" type="button"
+          <!-- CHANGED -->
+          <button id="btnGoTasks" type="button"
             class="px-4 py-2 rounded-2xl glass hover:bg-white/10 transition font-semibold text-sm">
-            Ver tarefas
+            Tarefas
           </button>
-          <button id="btnStartFullSim" type="button"
-            class="px-4 py-2 rounded-2xl border border-emerald-400/30 bg-emerald-400/15 hover:bg-emerald-400/20 transition font-semibold text-sm">
-            Fazer Simulado Completo
+          <button id="btnGoSchedule" type="button"
+            class="px-4 py-2 rounded-2xl glass hover:bg-white/10 transition font-semibold text-sm">
+            Agendamentos
           </button>
         </div>
+      </div>
+
+      <!-- Mobile mini actions (optional, super clean) -->
+      <div class="md:hidden flex gap-2 mt-2">
+        <button id="btnGoTasksMobile" type="button"
+          class="flex-1 px-4 py-2 rounded-2xl glass hover:bg-white/10 transition font-semibold text-sm">
+          Tarefas
+        </button>
+        <button id="btnGoScheduleMobile" type="button"
+          class="flex-1 px-4 py-2 rounded-2xl glass hover:bg-white/10 transition font-semibold text-sm">
+          Agendamentos
+        </button>
       </div>
 
       <div class="mt-5 grid grid-cols-1 lg:grid-cols-12 gap-4">
@@ -285,7 +329,8 @@
 
         <!-- Right column -->
         <div class="lg:col-span-3 flex flex-col gap-4">
-          <div class="rounded-3xl glass-strong shadow-glow p-5">
+          <!-- Add anchor id here -->
+          <div id="cardSchedule" class="rounded-3xl glass-strong shadow-glow p-5">
             <div class="flex items-start justify-between gap-3">
               <div>
                 <div class="text-sm font-bold">Agendamento</div>
@@ -302,7 +347,8 @@
             </button>
           </div>
 
-          <div class="rounded-3xl glass-strong shadow-glow p-5">
+          <!-- Add anchor id here -->
+          <div id="cardTasks" class="rounded-3xl glass-strong shadow-glow p-5">
             <div class="flex items-start justify-between gap-3">
               <div>
                 <div class="text-sm font-bold">Tarefas recentes</div>
@@ -463,7 +509,6 @@
       </div>
 
       <div class="mt-5 grid grid-cols-1 lg:grid-cols-12 gap-4">
-        <!-- Questions -->
         <div class="lg:col-span-7 rounded-3xl glass-strong shadow-glow p-5">
           <div class="flex items-start justify-between gap-3">
             <div>
@@ -494,7 +539,6 @@
           <div id="questionsContainer" class="mt-5 space-y-3"></div>
         </div>
 
-        <!-- Summary -->
         <div class="lg:col-span-5 flex flex-col gap-4">
           <div class="rounded-3xl glass-strong shadow-glow p-5">
             <div class="flex items-start justify-between gap-3">
@@ -584,16 +628,12 @@
   <script>
     /************************************************************
      * TutorVest: Aluno — protótipo SPA (1 arquivo)
-     * Refatoração: Tailwind + CSS mínimo, hierarquia mais clara
      ************************************************************/
 
-    // Ícone (mantém placeholders para seu app.py injetar base64)
     const APP_ICON_DATA_URI = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQAAA...".replace("...","");
     const APP_ICON_DATA_URI_FULL = "data:image/jpeg;base64,{{BASE64_ICON}}";
 
-    // Questões
     const QUESTION_BANK = [
-      // Matemática
       { id:"M1", subject:"Matemática", title:"Equações do 2º grau",
         prompt:"Se <strong>x</strong> é raiz da equação <strong>x² − 5x + 6 = 0</strong>, então o produto das raízes é:",
         options:{a:"5", b:"6", c:"−6", d:"11"}, answer:"b",
@@ -619,8 +659,6 @@
         options:{a:"19", b:"23", c:"27", d:"31"}, answer:"b",
         explanation:"aₙ = a₁ + (n−1)r ⇒ a₆ = 3 + 5·4 = 23."
       },
-
-      // Português
       { id:"P1", subject:"Português", title:"Figuras de linguagem",
         prompt:"Na frase <em>“A esperança é uma luz que não se apaga”</em>, ocorre principalmente:",
         options:{a:"Hipérbole", b:"Metáfora", c:"Ironia", d:"Eufemismo"}, answer:"b",
@@ -652,7 +690,6 @@
       }
     ];
 
-    // Util
     const $ = (s) => document.querySelector(s);
     const $$ = (s) => Array.from(document.querySelectorAll(s));
 
@@ -681,7 +718,6 @@
       }, 2200);
     }
 
-    // Estado
     const STORAGE_KEY = "tutorvest_aluno_prototipo_v2";
 
     const state = {
@@ -700,9 +736,9 @@
         { title:"Leitura e interpretação", desc:"2 textos curtos • identificar tese e argumentos.", kind:"leitura", priority:"media" }
       ],
       quiz: {
-        mode: "full",          // full | math | port
+        mode: "full",
         answers: {},
-        filter: "all",         // all | Matemática | Português
+        filter: "all",
         finished: false,
         lastResult: null,
         history: []
@@ -723,7 +759,6 @@
       catch(e){ console.warn("save failed", e); }
     }
 
-    // Navegação
     function showScreen(screenId){
       ["#screenLogin", "#screenDashboard", "#screenSubjects", "#screenQuiz"].forEach(id => $(id).classList.add("hidden"));
       $(screenId).classList.remove("hidden");
@@ -732,7 +767,6 @@
       else $("#topbar").classList.add("hidden");
     }
 
-    // Ícone
     function setIcons(){
       const icon = (APP_ICON_DATA_URI_FULL.includes("{{BASE64_ICON}}"))
         ? APP_ICON_DATA_URI
@@ -744,7 +778,32 @@
       if(b) b.src = icon;
     }
 
-    // Login
+    function scrollToCard(cardId){
+      const el = document.getElementById(cardId);
+      if(!el) return;
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    // Mobile menu
+    function closeMobileMenu(){
+      const menu = $("#mobileMenu");
+      const btn = $("#btnHamburger");
+      if(!menu || !btn) return;
+      menu.classList.add("hidden");
+      btn.setAttribute("aria-expanded","false");
+    }
+    function toggleMobileMenu(){
+      const menu = $("#mobileMenu");
+      const btn = $("#btnHamburger");
+      if(!menu || !btn) return;
+      const isOpen = !menu.classList.contains("hidden");
+      if(isOpen) closeMobileMenu();
+      else{
+        menu.classList.remove("hidden");
+        btn.setAttribute("aria-expanded","true");
+      }
+    }
+
     function doLogin(){
       const user = ($("#loginUser").value || "").trim();
       state.studentName = user.length ? user : "Aluno";
@@ -752,6 +811,7 @@
 
       $("#sessionLabel").textContent = `Sessão: ${state.studentName}`;
       $("#studentName").textContent = state.studentName;
+      $("#mobileStudentName").textContent = state.studentName;
 
       const initials = state.tutor.name.split(" ").slice(0,2).map(w=>w[0]).join("").toUpperCase();
       $("#tutorInitials").textContent = initials;
@@ -776,11 +836,11 @@
     function doLogout(){
       state.loggedIn = false;
       save();
+      closeMobileMenu();
       showScreen("#screenLogin");
       toast("Você saiu.");
     }
 
-    // Dashboard render
     function statusPill(status){
       if(status === "Confirmada") return `<span class="px-2 py-0.5 rounded-full text-xs border border-emerald-400/30 bg-emerald-400/10 text-white/80">Confirmada</span>`;
       if(status === "Pendente") return `<span class="px-2 py-0.5 rounded-full text-xs border border-amber-300/30 bg-amber-300/10 text-white/80">Pendente</span>`;
@@ -876,6 +936,7 @@
 
     function renderDashboard(){
       $("#studentName").textContent = state.studentName;
+      $("#mobileStudentName").textContent = state.studentName;
       $("#sessionLabel").textContent = `Sessão: ${state.studentName}`;
 
       $("#kpiTasks").textContent = String(state.tasks.length);
@@ -887,7 +948,6 @@
       updateSubjectStats();
     }
 
-    // Subjects stats
     function updateSubjectStats(){
       const hist = state.quiz?.history || [];
 
@@ -905,13 +965,13 @@
 
       const fmt = (x) => (x == null ? "—" : `${Math.round(x*100)}%`);
 
-      $("#mathBest").textContent = fmt(best("Matemática"));
-      $("#mathLast").textContent = fmt(last("Matemática"));
-      $("#portBest").textContent = fmt(best("Português"));
-      $("#portLast").textContent = fmt(last("Português"));
+      const mb = $("#mathBest"), ml = $("#mathLast"), pb = $("#portBest"), pl = $("#portLast");
+      if(mb) mb.textContent = fmt(best("Matemática"));
+      if(ml) ml.textContent = fmt(last("Matemática"));
+      if(pb) pb.textContent = fmt(best("Português"));
+      if(pl) pl.textContent = fmt(last("Português"));
     }
 
-    // Quiz
     function getModeQuestions(mode){
       if(mode === "math") return QUESTION_BANK.filter(q => q.subject === "Matemática");
       if(mode === "port") return QUESTION_BANK.filter(q => q.subject === "Português");
@@ -923,7 +983,6 @@
       $("#filterMath").setAttribute("aria-selected", which === "math" ? "true" : "false");
       $("#filterPort").setAttribute("aria-selected", which === "port" ? "true" : "false");
 
-      // visual state: selected gets a slightly brighter bg
       const map = { all:"#filterAll", math:"#filterMath", port:"#filterPort" };
       Object.entries(map).forEach(([k, id])=>{
         const el = $(id);
@@ -998,7 +1057,7 @@
       toast("Corrigido! Veja o resumo.");
     }
 
-    function renderQuiz(showResults=false){
+    function renderQuiz(){
       const mode = state.quiz.mode;
       const questions = getModeQuestions(mode);
       const answers = state.quiz.answers || {};
@@ -1108,7 +1167,6 @@
         container.appendChild(card);
       });
 
-      // results
       const resultsCard = $("#resultsCard");
       if(state.quiz.finished && state.quiz.lastResult){
         resultsCard.classList.remove("hidden");
@@ -1128,7 +1186,6 @@
       }
     }
 
-    // Chat send
     function sendMessage(){
       const txt = ($("#chatInput").value || "").trim();
       if(!txt){ toast("Digite uma mensagem."); return; }
@@ -1149,23 +1206,42 @@
       }, 550);
     }
 
-    // Wire
     function wire(){
       // Login
       $("#btnLogin").addEventListener("click", doLogin);
       $("#loginUser").addEventListener("keydown", e=>{ if(e.key==="Enter") doLogin(); });
       $("#loginPass").addEventListener("keydown", e=>{ if(e.key==="Enter") doLogin(); });
 
-      // Topbar
+      // Topbar desktop
       $("#btnLogout").addEventListener("click", doLogout);
       $("#btnGoDashboard").addEventListener("click", ()=>{ renderDashboard(); showScreen("#screenDashboard"); });
       $("#btnGoSubjects").addEventListener("click", ()=>{ updateSubjectStats(); showScreen("#screenSubjects"); });
 
-      // Dashboard
+      // Mobile hamburger
+      $("#btnHamburger").addEventListener("click", (e)=>{
+        e.stopPropagation();
+        toggleMobileMenu();
+      });
+      $("#btnMobileLogout").addEventListener("click", doLogout);
+      $("#btnMobileProfile").addEventListener("click", ()=>{
+        closeMobileMenu();
+        toast("protótipo: Perfil (ainda não implementado).");
+      });
+      document.addEventListener("click", ()=> closeMobileMenu());
+      document.addEventListener("keydown", (e)=>{ if(e.key === "Escape") closeMobileMenu(); });
+
+      // Dashboard (CHANGED: tasks/schedule)
+      const goTasks = ()=> scrollToCard("cardTasks");
+      const goSchedule = ()=> scrollToCard("cardSchedule");
+
+      $("#btnGoTasks").addEventListener("click", goTasks);
+      $("#btnGoSchedule").addEventListener("click", goSchedule);
+      $("#btnGoTasksMobile").addEventListener("click", goTasks);
+      $("#btnGoScheduleMobile").addEventListener("click", goSchedule);
+
+      // Other dashboard buttons
       $("#btnGoSubjects2").addEventListener("click", ()=>{ updateSubjectStats(); showScreen("#screenSubjects"); });
-      $("#btnStartFullSim").addEventListener("click", ()=> startQuiz("full"));
       $("#btnStartFromTasks").addEventListener("click", ()=> startQuiz("full"));
-      $("#btnOpenTasks").addEventListener("click", ()=> toast("Você já está no painel de tarefas (protótipo)."));
       $("#btnRequestSession").addEventListener("click", ()=> toast("protótipo: solicitação enviada ao tutor (sem backend)."));
 
       // Chat
@@ -1201,7 +1277,6 @@
       $("#btnGoSubjectsFromResults").addEventListener("click", ()=>{ updateSubjectStats(); showScreen("#screenSubjects"); });
     }
 
-    // Bootstrap
     function bootstrap(){
       load();
       setIcons();
@@ -1209,6 +1284,7 @@
 
       if(state.loggedIn){
         $("#studentName").textContent = state.studentName;
+        $("#mobileStudentName").textContent = state.studentName;
         $("#sessionLabel").textContent = `Sessão: ${state.studentName}`;
         renderDashboard();
         showScreen("#screenDashboard");
